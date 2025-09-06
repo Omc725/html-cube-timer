@@ -56,6 +56,7 @@
         #solves-list { list-style: none; padding: 0; margin: 0; overflow-y: auto; font-weight: 500; }
         #solves-list li { display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; border-radius: 5px; cursor: pointer; transition: background-color 0.2s; }
         #solves-list li:nth-child(odd) { background-color: var(--list-item-odd-bg); }
+        .delete-btn { background: none; border: none; color: var(--text-secondary); cursor: pointer; font-size: 1.2em; z-index: 5; }
         .stats-box { background-color: var(--bg-widget); border-radius: 8px; padding: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         .stat-item { text-align: center; } .stat-item .label { font-size: 0.9em; color: var(--text-secondary); font-weight: 600; } .stat-item .value { font-size: 1.3em; font-weight: 600; } .stat-item.best .value { color: var(--accent-green); }
         .cube-visualization { display: grid; grid-template-columns: repeat(12, 16px); grid-template-rows: repeat(9, 16px); margin: auto; }
@@ -71,31 +72,32 @@
         /* === MOBİL ARAYÜZ === */
         #bottom-nav, .mobile-timer-footer { display: none; }
         body.is-mobile { background-color: #000; }
-        body.is-mobile .sidebar, body.is-mobile #menu-toggle-btn { display: none; }
-        body.is-mobile .desktop-timer-details { display: none; }
-        body.is-mobile .main-content { height: 100vh; padding-bottom: 70px; }
+        body.is-mobile .sidebar, body.is-mobile #menu-toggle-btn, body.is-mobile .desktop-timer-details { display: none; }
+        body.is-mobile .main-content { height: 100vh; }
         body.is-mobile .view { padding: 10px; }
-        body.is-mobile #bottom-nav { display: flex; position: fixed; bottom: 0; left: 0; width: 100%; justify-content: space-around; background-color: #111; border-top: 1px solid var(--border-color); padding: 5px 0; padding-bottom: calc(5px + env(safe-area-inset-bottom)); z-index: 100; }
+        body.is-mobile #timer-view.active { display: flex; flex-direction: column; height: 100%; padding: 0; padding-bottom: calc(65px + 75px); }
+        body.is-mobile #bottom-nav { display: flex; position: fixed; bottom: 0; left: 0; width: 100%; justify-content: space-around; background-color: #111; border-top: 1px solid var(--border-color); padding: 5px 0; padding-bottom: calc(5px + env(safe-area-inset-bottom)); z-index: 100; flex-shrink: 0; height: 65px; }
         body.is-mobile #bottom-nav button { background: none; border: none; color: var(--text-secondary); cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 10px; font-weight: 500; }
-        body.is-mobile #bottom-nav button .icon-background { background-color: var(--bg-widget); border-radius: 8px; width: 45px; height: 30px; display: flex; justify-content: center; align-items: center; margin-bottom: 4px; }
+        body.is-mobile #bottom-nav button .icon-background { background-color: var(--bg-widget); border-radius: 8px; width: 45px; height: 32px; display: flex; justify-content: center; align-items: center; margin-bottom: 4px; }
         body.is-mobile #bottom-nav button svg { width: 24px; height: 24px; fill: var(--text-primary); }
         body.is-mobile #bottom-nav button.active { color: var(--text-primary); }
+        body.is-mobile #timer-view.active .scramble-container { flex-shrink: 0; flex-direction: column; gap: 5px; padding: 10px; }
+        body.is-mobile #scramble { font-size: 1em; }
+        body.is-mobile .timer-main { flex-grow: 1; flex-shrink: 1; min-height: 120px; }
         body.is-mobile #timer { font-size: 100px; }
-        body.is-mobile .scramble-container { flex-direction: column; gap: 10px; }
-        body.is-mobile #scramble { font-size: 1.1em; }
-        body.is-mobile .mobile-timer-footer { display: grid; grid-template-columns: 1fr auto 1fr; gap: 10px; align-items: center; padding: 10px; }
-        body.is-mobile .stats-col { text-align: left; font-size: 0.9em; line-height: 1.6; } body.is-mobile .stats-col div { display: flex; gap: 5px; } body.is-mobile .stats-col .label { color: var(--text-secondary); } body.is-mobile .stats-col .value { font-weight: 600; }
-        body.is-mobile .cube-visualization { grid-template-columns: repeat(12, 12px); grid-template-rows: repeat(9, 12px); } body.is-mobile .sticker { width: 12px; height: 12px; border-width: 1px; border-color: #000; }
-        body.is-mobile #solves-view .solves-header { display: flex; justify-content: space-between; align-items: center; padding: 10px; }
-        body.is-mobile .solves-header .search-bar { flex-grow: 1; background-color: var(--bg-widget); border: none; border-radius: 8px; color: var(--text-primary); padding: 10px; margin: 0 10px; }
-        body.is-mobile .solves-header .icon-btn { background: none; border: none; color: var(--text-primary); padding: 5px; }
+        body.is-mobile #timer-view.active .mobile-timer-footer { display: grid; grid-template-columns: 1fr auto 1fr; gap: 10px; align-items: center; padding: 10px; flex-shrink: 0; width: 100%; position: absolute; bottom: 65px; left: 0; }
+        body.is-mobile .stats-col { text-align: left; font-size: 0.8em; line-height: 1.5; } body.is-mobile .stats-col div { display: flex; gap: 5px; } body.is-mobile .stats-col .label { color: var(--text-secondary); } body.is-mobile .stats-col .value { font-weight: 600; }
+        body.is-mobile .cube-visualization { grid-template-columns: repeat(12, 11px); grid-template-rows: repeat(9, 11px); } body.is-mobile .sticker { width: 11px; height: 11px; border-width: 1px; border-color: #000; }
+        body.is-mobile #solves-view { padding: 10px; padding-bottom: 75px; }
+        body.is-mobile #solves-view .solves-header { display: none; }
         body.is-mobile .solves-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; }
         body.is-mobile .solve-card { background-color: var(--bg-widget); border-radius: 12px; padding: 15px; text-align: center; cursor: pointer; }
         body.is-mobile .solve-card .date { font-size: 0.8em; color: var(--text-secondary); } body.is-mobile .solve-card .time { font-size: 1.5em; font-weight: 600; margin-top: 5px; }
-        body.is-mobile #stats-view h2 { display: none; }
-        body.is-mobile #stats-view .stats-grid { display: none; }
-        body.is-mobile .stats-table { background-color: var(--bg-widget); border-radius: 12px; padding: 15px; margin-top: 20px; }
-        body.is-mobile .stats-table .row { display: flex; justify-content: space-between; padding: 10px 5px; border-bottom: 1px solid var(--border-color); }
+        body.is-mobile #stats-view { padding: 10px 0; padding-bottom: 75px; } /* YAN BOŞLUKLAR KALDIRILDI */
+        body.is-mobile #stats-view h2, body.is-mobile #stats-view .stats-grid { display: none; }
+        body.is-mobile #stats-view .chart-container { margin-top: 10px; margin-bottom: 10px; }
+        body.is-mobile .stats-table { background-color: var(--bg-widget); border-radius: 12px; padding: 5px 15px; margin: 0 10px; } /* İçerik için yan boşluk eklendi */
+        body.is-mobile .stats-table .row { display: flex; justify-content: space-between; padding: 8px 5px; border-bottom: 1px solid var(--border-color); }
         body.is-mobile .stats-table .row:last-child { border-bottom: none; } body.is-mobile .stats-table .label { color: var(--text-secondary); font-weight: 500; } body.is-mobile .stats-table .value { font-weight: 600; }
 
         /* Ortak Elemanlar */
@@ -103,7 +105,11 @@
         .modal-content { background-color: #2d2e32; padding: 20px; border-radius: 12px; border: 1px solid var(--border-color); width: 90%; max-width: 500px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
         #modal-time { font-size: 2.5em; font-weight: 600; margin-bottom: 15px; } #modal-scramble { font-size: 1.1em; color: var(--text-secondary); word-wrap: break-word; line-height: 1.6; background-color: #27282c; padding: 10px; border-radius: 5px; font-weight: 500; } #modal-date { font-size: 0.9em; color: var(--text-secondary); margin-top: 20px; font-weight: 500; }
         #modal-cube-net { margin: 25px auto; } #modal-cube-net .sticker { border-color: #2d2e32; }
-        #modal-close { margin-top: 20px; padding: 10px 20px; cursor: pointer; border: none; background-color: var(--accent-blue); color: white; border-radius: 5px; font-size: 1em; font-weight: 600; }
+        .modal-actions { margin-top: 20px; display: flex; gap: 10px; justify-content: center; }
+        .modal-btn { padding: 10px 20px; cursor: pointer; border: none; border-radius: 5px; font-size: 1em; font-weight: 600; }
+        #modal-close { background-color: var(--accent-blue); color: white; }
+        #modal-delete-btn { background-color: var(--accent-red); color: white; display: none; }
+        body.is-mobile #modal-delete-btn { display: inline-block; }
 
     </style>
 </head>
@@ -133,17 +139,12 @@
             </div>
             
             <div id="solves-view" class="view">
-                <div class="solves-header">
-                    <button class="icon-btn"><svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path><path d="M13 7h-2v5.414l3.293 3.293 1.414-1.414L13 11.586z"></path></svg></button>
-                    <input type="search" class="search-bar" placeholder="Yorum ara">
-                    <button class="icon-btn"><svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M19 4h-2V2h-2v2H9V2H7v2H5c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2h14c1.103 0 2-.897 2-2V6c0-1.103-.897-2-2-2zM5 20V7h14V6l.002 14H5z"></path><path d="M7 9h2v2H7zm4 0h2v2h-2zm4 0h2v2h-2zm-8 4h2v2H7zm4 0h2v2h-2zm4 0h2v2h-2z"></path></svg></button>
-                    <button class="icon-btn"><svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M12 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-4c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 8c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"></path></svg></button>
-                </div>
+                <div class="solves-header"></div>
                 <div class="solves-grid" id="solves-grid"></div>
             </div>
 
             <div id="stats-view" class="view">
-                <h2>İstatistikler</h2>
+                <h2 class="desktop-only">İstatistikler</h2>
                 <div class="stats-grid"><div class="widget best"><h3>En İyi Süre (PB)</h3><p class="value" id="stats-pb">-</p></div><div class="widget"><h3>Toplam Çözüm</h3><p class="value" id="stats-total">-</p></div><div class="widget"><h3>Ortalama Süre</h3><p class="value" id="stats-mean">-</p></div></div>
                 <div class="chart-container widget"><h3>Çözüm Süreleri Grafiği</h3><canvas id="solves-chart"></canvas></div>
                 <div class="stats-table" id="stats-table"></div>
@@ -151,7 +152,7 @@
         </main>
     </div>
     
-    <div id="solve-details-modal" class="modal"><div class="modal-content"><h2 id="modal-time"></h2><div class="cube-visualization" id="modal-cube-net"></div><p id="modal-scramble"></p><p id="modal-date"></p><button id="modal-close">Kapat</button></div></div>
+    <div id="solve-details-modal" class="modal"><div class="modal-content"><h2 id="modal-time"></h2><div class="cube-visualization" id="modal-cube-net"></div><p id="modal-scramble"></p><p id="modal-date"></p><div class="modal-actions"><button id="modal-delete-btn" class="modal-btn">Çözümü Sil</button><button id="modal-close" class="modal-btn">Kapat</button></div></div></div>
     
     <nav id="bottom-nav">
         <button class="nav-btn active" data-view="timer-view"><div class="icon-background"><svg viewBox="0 0 24 24"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"></path><path d="M13 7h-2v5.414l3.293 3.293 1.414-1.414L13 11.586z"></path></svg></div>Zamanlayıcı</button>
@@ -170,6 +171,7 @@
         const mobileCubeNet = document.getElementById('mobile-cube-net'), desktopCubeNet = document.getElementById('desktop-cube-net');
         const newScrambleBtn = document.getElementById('new-scramble-btn');
         const modal=document.getElementById('solve-details-modal'), modalCloseBtn=document.getElementById('modal-close'), modalCubeNet=document.getElementById('modal-cube-net');
+        const modalDeleteBtn = document.getElementById('modal-delete-btn');
         const sidebar = document.getElementById('sidebar'), menuToggleBtn = document.getElementById('menu-toggle-btn'), overlay = document.getElementById('overlay');
         const solvesListEl = document.getElementById('solves-list');
         const colors={W:'#fefefe',G:'#34d399',R:'#ef4444',B:'#3c82f6',O:'#f97316',Y:'#eab308'};
@@ -225,7 +227,7 @@
         function handleInteractionEnd(){if(!isRunning&&readyToStart){timerEl.style.color='var(--accent-green)';startTimer()}readyToStart=false}
         
         function switchView(viewId) {
-            document.querySelector('.view.active').classList.remove('active');
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
             document.getElementById(viewId).classList.add('active');
             if (viewId === 'stats-view') drawChart();
         }
@@ -264,9 +266,14 @@
             menuToggleBtn.addEventListener('click', toggleMenu);
             overlay.addEventListener('click', toggleMenu);
             modalCloseBtn.addEventListener('click',()=>modal.style.display='none');
+            modalDeleteBtn.addEventListener('click', (e) => {
+                const index = parseInt(e.target.dataset.index);
+                deleteSolve(index);
+                modal.style.display = 'none';
+            });
         }
 
-        function showSolveDetails(index){const solve=solves[index];document.getElementById('modal-time').textContent=formatTime(solve.time);document.getElementById('modal-scramble').textContent=solve.scramble;document.getElementById('modal-date').textContent=new Date(solve.date).toLocaleString('tr-TR');drawCubeNetForContainer(modalCubeNet,applyScramble(solve.scramble));modal.style.display='flex'}
+        function showSolveDetails(index){const solve=solves[index];document.getElementById('modal-time').textContent=formatTime(solve.time);document.getElementById('modal-scramble').textContent=solve.scramble;document.getElementById('modal-date').textContent=new Date(solve.date).toLocaleString('tr-TR');drawCubeNetForContainer(modalCubeNet,applyScramble(solve.scramble));modalDeleteBtn.dataset.index = index; modal.style.display='flex'}
         function drawChart(){if(chartInstance)chartInstance.destroy();const labels=solves.map((_,i)=>solves.length-i).reverse();const data=solves.map(s=>s.time/1000).reverse();const ao5Data = [...new Array(4).fill(null), ...solves.slice(0,solves.length > 4 ? solves.length - 4: 0).map((_,i)=>calculateAverage(5,solves.slice(i))/1000).reverse()]; const ao12Data = [...new Array(11).fill(null), ...solves.slice(0,solves.length > 11 ? solves.length - 11 : 0).map((_,i)=>calculateAverage(12,solves.slice(i))/1000).reverse()]; chartInstance=new Chart(chartCanvas,{type:'line',data:{labels,datasets:[{label:'Her şey',data,borderColor:'#FFF',tension:0.1},{label:'Ao5',data:ao5Data,borderColor:'red',tension:0.1},{label:'Ao12',data:ao12Data,borderColor:'lime',tension:0.1}]},options:{responsive:true,maintainAspectRatio:false}})}
         
         function saveSolves(){localStorage.setItem('cubeTimerFinal',JSON.stringify(solves))}
